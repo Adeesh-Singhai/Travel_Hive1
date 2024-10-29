@@ -1,0 +1,95 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+  <div class="row mt-3">
+    <div class="col-8 offset-2">
+      <br />
+      <br />
+      <h3>Create a New Listing</h3>
+      <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input name="listing[title]" placeholder="Enter title" type="text" class="form-control" required />
+          <div class="valid-feedback">Title looks fine! <3</div>
+          <div class="invalid-feedback">Title can not be empty :(</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea name="listing[description]" placeholder="Enter description" class="form-control" rows="5" required></textarea>
+          <div class="valid-feedback">Description looks fine! <3</div>
+          <div class="invalid-feedback">Description can not be empty :(</div>
+        </div>
+
+        <div class="mb-3" id="image-container">
+          <label for="image" class="form-label">Upload Image(s)</label>
+          <div class="image-inputs">
+            <div class="image-input">
+              <input name="listing[images]" type="file" class="form-control mb-2" multiple required/>
+              <div class="valid-feedback">Images look fine :)<3</div>
+              <div class="invalid-feedback">Please select valid image files :)</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary mt-2" style="background-color:#fe424d; border: none;" onclick="addImageInput()">
+            Add Another Image
+          </button>
+        </div>
+
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input name="listing[price]" placeholder="Enter price" type="number" class="form-control" required />
+          <div class="valid-feedback">Great! Price looks fine <3</div>
+          <div class="invalid-feedback">Price must be a positive number :)</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="country" class="form-label">Country</label>
+          <input name="listing[country]" placeholder="Enter country" type="text" class="form-control" required />
+          <div class="invalid-feedback">Please enter a valid Country name :)</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input name="listing[location]" placeholder="Enter location" type="text" class="form-control" required />
+          <div class="invalid-feedback">Please enter a valid Location :)</div>
+        </div>
+
+        <button class="btn btn-dark add-btn mt-3">Create Listing</button>
+      </form>
+
+      <script>
+        // Function to add new image input
+        function addImageInput() {
+          const container = document.querySelector('.image-inputs');
+          const newInput = document.createElement('div');
+          newInput.classList.add('image-input');
+          newInput.innerHTML = `
+            <input name="listing[images]" type="file" class="form-control mb-2" />
+            <div class="valid-feedback">Image looks fine <3</div>
+            <div class="invalid-feedback">Please select a valid image file :)</div>
+          `;
+          container.appendChild(newInput);
+        }
+
+        // Form validation
+        (() => {
+          'use strict';
+
+          const forms = document.querySelectorAll('.needs-validation');
+
+          Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add('was-validated');
+            }, false);
+          });
+        })();
+      </script>
+    </div>
+  </div>
+  <br />
+  <br />
+</body>
